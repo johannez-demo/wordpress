@@ -1,0 +1,30 @@
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    container_name: wordpress
+    env_file: .env
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: $MYSQL_USER
+      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
