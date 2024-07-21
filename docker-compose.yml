@@ -1,7 +1,9 @@
 services:
-
   wordpress:
-    image: wordpress
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: development
     restart: always
     container_name: wordpress
     depends_on:
@@ -10,16 +12,17 @@ services:
     ports:
       - 8080:80
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: $MYSQL_USER
       WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
       WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
     volumes:
+      - wordpress:/var/www/html
       - ./wordpress/plugins:/var/www/html/wp-content/plugins
+      - ./wordpress/themes:/var/www/html/wp-content/themes
       - ./wordpress/uploads:/var/www/html/wp-content/uploads
       - ./wordpress/wp-config.php:/var/www/html/wp-config.php
-    networks:
-      - wordpress
 
   db:
     image: mysql:8.0
@@ -30,11 +33,9 @@ services:
       MYSQL_DATABASE: wordpress
     volumes:
       - db:/var/lib/mysql
-    networks:
-      - wordpress
+    ports:
+      - 3306:3306
 
 volumes:
-  db:
-
-networks:
   wordpress:
+  db:
