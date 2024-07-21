@@ -1,0 +1,24 @@
+{
+    "name": "johannez/demo-wp",
+    "description": "Demo site for Wordpress",
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
+    "require": {
+        "wpackagist-plugin/kint-debugger": "^1.2",
+        "wpackagist-plugin/regenerate-thumbnails": "^3.1",
+        "wpackagist-plugin/user-role-editor": "^4.55",
+        "wpackagist-plugin/wp-native-php-sessions": "^1.2",
+        "wpackagist-plugin/wp-redis": "^1.0",
+        "wpackagist-plugin/ninja-forms": "3.4.24.3",
+        "nesbot/carbon": "^2.36"
+    },
+    "autoload": {
+        "psr-4": {
+            "Demo\\": "src/Demo"
+        }
+    }
+}

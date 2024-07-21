@@ -1,4 +1,4 @@
-
+# Todo: make install command for composer
 
 up:
 	docker-compose -f docker-compose.yml up -d
