@@ -13,16 +13,24 @@ services:
       - 8080:80
     environment:
       WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: $MYSQL_USER
-      WORDPRESS_DB_PASSWORD: $MYSQL_PASSWORD
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: password
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
+      WP_SITE_URL: http://localhost:8080
+      WP_ADMIN_USER: admin
+      WP_ADMIN_PASSWORD: password
+      WP_ADMIN_EMAIL: admin@example.com
+      WP_POST_URL_STRUCTURE: /blog-post/%postname%
     volumes:
       - wordpress:/var/www/html
       - ./wordpress/plugins:/var/www/html/wp-content/plugins
       - ./wordpress/themes:/var/www/html/wp-content/themes
       - ./wordpress/uploads:/var/www/html/wp-content/uploads
       - ./wordpress/wp-config.php:/var/www/html/wp-config.php
+      - ./wordpress/composer.json:/var/www/html/composer.json
+      - ./wordpress/composer.lock:/var/www/html/composer.lock
+      - ./wordpress/scripts:/var/www/html/scripts
 
   db:
     image: mysql:8.0
