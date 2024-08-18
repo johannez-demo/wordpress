@@ -14,10 +14,9 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 
 
-COPY ./wordpress/plugins /var/www/html/wp-content/plugins
-COPY ./wordpress/themes /var/www/html/wp-content/themes
-COPY ./wordpress/uploads /var/www/html/wp-content/uploads
-COPY ./wordpress/wp-config.php /var/www/html/wp-config.php
-COPY ./wordpress/composer.json /var/www/html/composer.json
-COPY ./wordpress/composer.lock /var/www/html/composer.lock
-COPY ./wordpress/scripts /var/www/html/scripts
+COPY ./plugins /var/www/html/wp-content/plugins
+COPY ./themes /var/www/html/wp-content/themes
+COPY ./wp-config.php /var/www/html/wp-config.php
+COPY ./composer.json /var/www/html/composer.json
+COPY ./composer.lock /var/www/html/composer.lock
+COPY ./scripts /var/www/html/scripts

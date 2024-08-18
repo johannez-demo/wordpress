@@ -23,14 +23,14 @@ services:
       WP_ADMIN_EMAIL: admin@example.com
       WP_POST_URL_STRUCTURE: /blog-post/%postname%
     volumes:
-      - wordpress:/var/www/html
-      - ./wordpress/plugins:/var/www/html/wp-content/plugins
-      - ./wordpress/themes:/var/www/html/wp-content/themes
-      - ./wordpress/uploads:/var/www/html/wp-content/uploads
-      - ./wordpress/wp-config.php:/var/www/html/wp-config.php
-      - ./wordpress/composer.json:/var/www/html/composer.json
-      - ./wordpress/composer.lock:/var/www/html/composer.lock
-      - ./wordpress/scripts:/var/www/html/scripts
+      # - wordpress:/var/www/html
+      - ./plugins:/var/www/html/wp-content/plugins
+      - ./themes:/var/www/html/wp-content/themes
+      - ./uploads:/var/www/html/wp-content/uploads
+      - ./wp-config.php:/var/www/html/wp-config.php
+      - ./composer.json:/var/www/html/composer.json
+      - ./composer.lock:/var/www/html/composer.lock
+      - ./scripts:/var/www/html/scripts
 
   db:
     image: mysql:8.0

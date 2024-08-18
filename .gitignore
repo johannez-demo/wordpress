@@ -1,15 +1,15 @@
 # Configuration
 .env
-/wordpress/wp-config-local.php
+wp-config-local.php
 
 # Example themes
-/wordpress/themes/twenty*/
+themes/twenty*/
 
 # Example plugin
-/wordpress/plugins/hello.php
+plugins/hello.php
 
 # Uploads
-/wordpress/uploads/
+uploads/
 
 # Log files
 *.log
