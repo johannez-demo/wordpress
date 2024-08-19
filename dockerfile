@@ -1,5 +1,5 @@
-FROM wordpress:latest as development
-LABEL org.opencontainers.image.source https://github.com/johannez/demo-wp
+FROM wordpress:latest AS development
+LABEL org.opencontainers.image.source=https://github.com/johannez/demo-wp
 
 RUN echo "Updating base image..."
 RUN apt update && \
