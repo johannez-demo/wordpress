@@ -3,13 +3,14 @@ name: Build and Push Docker Image
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  packages: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
 
     steps:
       - name: Checkout repository
