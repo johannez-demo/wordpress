@@ -17,14 +17,14 @@ jobs:
           php-version: "8.2"
 
       - name: Install dependencies
-        run: make install
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHP lint
         run: |
           echo "Running PHP lint..."
-          make lint
+          vendor/bin/parallel-lint ./src ./tests ./wp-content/plugins
 
       - name: Run PHP unit tests
         run: |
           echo "Running PHP unit tests..."
-          make test
+          vendor/bin/phpunit -c phpunit.xml
