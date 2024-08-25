@@ -14,14 +14,20 @@ logs:
 ssh:
 	docker exec -u ${USER} -it ${CONTAINER} /bin/bash
 
-composer-install:
-	docker exec -u ${USER} -it ${CONTAINER} composer install
+install:
+	docker exec -u ${USER} -it ${CONTAINER} composer install \
+	--prefer-dist --no-progress --no-suggest
 
-composer-update:
+update:
 	docker exec -u ${USER} -it ${CONTAINER} composer update
 
-install: composer-install
+site-install: composer-install
 	docker exec -u ${USER} -it ${CONTAINER} ./scripts/site_install.sh
+
+lint:
+	echo "Running php lint..."
+	docker exec -u ${USER} -it ${CONTAINER} ./vendor/bin/parallel-lint \
+	./src ./tests ./wp-content/plugins
 
 test:
 	echo "Running php unit tests..."
