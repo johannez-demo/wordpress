@@ -13,6 +13,7 @@ uploads/
 
 # Log files
 *.log
+build
 
 .DS_Store
 .vs_code

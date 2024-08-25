@@ -31,6 +31,8 @@ services:
       - ./scripts:/var/www/html/scripts
       - ./src:/var/www/html/src
       - ./tests:/var/www/html/tests
+      - ./phpunit.xml:/var/www/html/phpunit.xml
+      - ./build:/var/www/html/build
 
   db:
     image: mysql:8.0

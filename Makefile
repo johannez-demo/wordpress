@@ -6,6 +6,7 @@ build:
 	docker compose -f build
 up:
 	docker compose -f docker-compose.yml up -d
+	${MAKE} composer-install
 down:
 	docker compose -f docker-compose.yml down
 logs:
@@ -21,3 +22,8 @@ composer-update:
 
 install: composer-install
 	docker exec -u ${USER} -it ${CONTAINER} ./scripts/site_install.sh
+
+test:
+	echo "Running php unit tests..."
+	docker exec -u ${USER} -it ${CONTAINER} ./vendor/bin/phpunit -c phpunit.xml
+
