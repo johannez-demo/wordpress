@@ -15,6 +15,9 @@
         "wpackagist-plugin/wp-redis": "^1.0",
         "wp-cli/wp-cli-bundle": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^11.3"
+    },
     "autoload": {
         "psr-4": {
             "Demo\\": "src/Demo"

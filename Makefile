@@ -16,5 +16,8 @@ ssh:
 composer-install:
 	docker exec -u ${USER} -it ${CONTAINER} composer install
 
+composer-update:
+	docker exec -u ${USER} -it ${CONTAINER} composer update
+
 install: composer-install
 	docker exec -u ${USER} -it ${CONTAINER} ./scripts/site_install.sh
