@@ -23,7 +23,6 @@ services:
       WP_ADMIN_EMAIL: admin@example.com
       WP_POST_URL_STRUCTURE: /blog-post/%postname%
     volumes:
-      # - wordpress:/var/www/html
       - ./plugins:/var/www/html/wp-content/plugins
       - ./themes:/var/www/html/wp-content/themes
       - ./uploads:/var/www/html/wp-content/uploads
