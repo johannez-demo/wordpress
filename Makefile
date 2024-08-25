@@ -11,7 +11,7 @@ down:
 logs:
 	docker compose -f docker-compose.yml logs --tail=100 -f $(c)
 ssh:
-	docker compose -f docker-compose.yml exec wordpress /bin/bash
+	docker exec -u ${USER} -it ${CONTAINER} /bin/bash
 
 composer-install:
 	docker exec -u ${USER} -it ${CONTAINER} composer install

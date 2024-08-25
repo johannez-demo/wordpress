@@ -21,3 +21,5 @@ COPY ./wp-config.php /var/www/html/wp-config.php
 COPY ./composer.json /var/www/html/composer.json
 COPY ./composer.lock /var/www/html/composer.lock
 COPY ./scripts /var/www/html/scripts
+COPY ./src /var/www/html/src
+COPY ./tests /var/www/html/tests

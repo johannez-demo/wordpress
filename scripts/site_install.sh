@@ -13,6 +13,6 @@ $WPCLI --allow-root core install \
 
 $WPCLI rewrite structure ${WP_POST_URL_STRUCTURE}
 
-$WPCLI plugin activate advanced-custom-fields regenerate-thumbnails user-role-editor custom-config
+$WPCLI plugin activate advanced-custom-fields regenerate-thumbnails user-role-editor demo-config
 
 $WPCLI eval-file $SCRIPTS_DIR/acf/acf_import.php

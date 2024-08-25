@@ -24,7 +24,7 @@
  * Local composer libraries.
  */
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-	require_once (__DIR__ . '/vendor/autoload.php');
+	require_once(__DIR__ . '/vendor/autoload.php');
 }
 
 // IMPORTANT: this file needs to stay in-sync with https://github.com/WordPress/WordPress/blob/master/wp-config-sample.php

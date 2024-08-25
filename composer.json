@@ -1,6 +1,7 @@
 {
-    "name": "johannez/demo-wp",
+    "name": "johannez-demo/wordpress",
     "description": "Demo site for Wordpress",
+    "version": "1.0.0",
     "repositories":[
         {
             "type":"composer",
