@@ -6,7 +6,7 @@ build:
 	docker compose -f build
 up:
 	docker compose -f docker-compose.yml up -d
-	${MAKE} composer-install
+	${MAKE} install
 down:
 	docker compose -f docker-compose.yml down
 logs:
@@ -21,7 +21,7 @@ install:
 update:
 	docker exec -u ${USER} -it ${CONTAINER} composer update
 
-site-install: composer-install
+site-install: install
 	docker exec -u ${USER} -it ${CONTAINER} ./scripts/site_install.sh
 
 lint:
