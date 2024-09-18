@@ -22,7 +22,7 @@ jobs:
 
       - name: Print Version
         run: |
-          echo "github: $(echo '${{ toJSON(steps.semver.outputs) }}' | jq .)"
+          echo "version: $(echo '${{ toJSON(steps.semver.outputs) }}' | jq .)"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
