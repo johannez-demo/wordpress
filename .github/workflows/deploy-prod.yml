@@ -15,8 +15,7 @@ jobs:
 
       - name: Print GitHub
         run: |
-          echo "github.ref: ${{ github.ref }}"
-          echo "github.base_ref: ${{ github.base_ref }}"
+          echo "github: $(echo '${{ toJSON(github) }}' | jq .)"
 
       - name: Extract Metadata
         id: metadata
