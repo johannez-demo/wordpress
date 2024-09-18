@@ -1,9 +1,9 @@
 name: Deploy to Production
 
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -13,19 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Print GitHub
-        run: |
-          echo "github: $(echo '${{ toJSON(github) }}' | jq .)"
-
-      - name: Extract Metadata
-        id: metadata
-        uses: docker/metadata-action@v5
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
         with:
-          images: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha
+          token: ${{ github.token }}
+          branch: main
+
+      - name: Print Version
+        run: |
+          echo "github: $(echo '${{ toJSON(steps.semver.outputs) }}' | jq .)"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
