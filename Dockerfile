@@ -1,11 +1,13 @@
-FROM wordpress:latest AS development
+FROM wordpress:latest AS build
 
 RUN echo "Updating base image..."
 RUN apt update && \
     apt upgrade -y && \
-    apt autoremove \
-    apt-get install vim -y
+    apt autoremove
 
+# Install vim
+RUN echo "Installing vim..."
+RUN apt-get install -y vim
 
 RUN echo "Installing composer..."
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
