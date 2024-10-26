@@ -27,7 +27,7 @@ jobs:
           echo "PUBLIC_IP=$EC2_DEV_TAG" >> $GITHUB_ENV
       - name: Print public IP
         run: |
-          echo env.PUBLIC_IP
+          echo ${{ env.PUBLIC_IP }}
 
     #   - name: Deploy to EC2
     #     uses: appleboy/ssh-action@v0.1.3
