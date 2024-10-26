@@ -23,7 +23,7 @@ jobs:
       - name: Get EC2 Public IP
         id: get_ec2_ip
         run: |
-          EC2_DEV_TAG = ${{ vars.SERVICE_NAME }}-dev-web
+          EC2_DEV_TAG=${{ vars.SERVICE_NAME }}-dev-web
           echo "PUBLIC_IP=$EC2_DEV_TAG" >> $GITHUB_ENV
       - name: Print public IP
         run: |
