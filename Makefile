@@ -6,7 +6,6 @@ build:
 	docker compose -f build
 up:
 	docker compose -f docker-compose.yml up -d
-	${MAKE} install
 down:
 	docker compose -f docker-compose.yml down
 logs:

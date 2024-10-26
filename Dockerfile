@@ -23,3 +23,6 @@ COPY ./scripts /var/www/html/scripts
 COPY ./src /var/www/html/src
 COPY ./tests /var/www/html/tests
 COPY ./phpunit.xml /var/www/html/phpunit.xml
+
+# Change ownership of /var/www/html to www-data
+RUN chown -R www-data:www-data /var/www/html
