@@ -3,7 +3,8 @@ FROM wordpress:latest AS development
 RUN echo "Updating base image..."
 RUN apt update && \
     apt upgrade -y && \
-    apt autoremove
+    apt autoremove \
+    apt-get install vim -y
 
 
 RUN echo "Installing composer..."
