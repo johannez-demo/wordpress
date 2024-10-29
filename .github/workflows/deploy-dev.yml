@@ -41,7 +41,7 @@ jobs:
       - name: Get database password
         id: db_password
         run: |
-          DB_PASSWORD=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.password --query "Parameter.Value" --output text)
+          DB_PASSWORD=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.password --with-decryption --query "Parameter.Value" --output text)
           echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
 
       - name: Print all env variables
