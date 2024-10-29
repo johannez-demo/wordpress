@@ -30,7 +30,7 @@ jobs:
       - name: Get database user name
         id: db_username
         run: |
-          DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db_username --query "Parameter.Value" --output text)
+          DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.username --query "Parameter.Value" --output text)
           echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
       - name: Print all env variables
