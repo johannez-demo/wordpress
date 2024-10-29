@@ -44,6 +44,10 @@ jobs:
           DB_PASSWORD=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.password --with-decryption --query "Parameter.Value" --output text)
           echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
 
+      - name: Hide sensitive variables from output
+        run: |
+          echo "::add-mask::${{ env.DB_PASSWORD }}"
+
       - name: Print all env variables
         run: |
           echo "DB_USERNAME=${{ env.DB_USERNAME}}"
