@@ -36,6 +36,7 @@ jobs:
         id: db_username
         run: |
           DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.username --query "Parameter.Value" --output text)
+          echo "::add-mask::$DB_USERNAME"
           echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
       - name: Get database password

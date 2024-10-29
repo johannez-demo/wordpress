@@ -27,7 +27,9 @@ jobs:
 
       - name: Create version.json
         run: |
-          echo '{ "version": "'$(date +%Y.%m.%d)'.'${{ github.run_number }}'", "commit": "'${{ github.sha }}'" }' > version.json
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          VERSION=$(date +%Y.%m.%d).${{ github.run_number }}
+          echo '{ "version": "'${VERSION}'", "commit": "'${{ github.sha }}'", "tag": "'${LATEST_TAG}'" }' > version.json
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
