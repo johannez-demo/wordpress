@@ -32,16 +32,17 @@ jobs:
           echo ${{ env.PUBLIC_IP }}
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.1.0
-        with:
-          host: ${{ env.PUBLIC_IP }}
-          username: ec2-user
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            echo ${{ env.PUBLIC_IP }}
-            echo ${{ secrets.EC2_SSH_KEY }}
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          HOSTNAME: ${{ env.PUBLIC_IP}}
+          USER_NAME: ec2-user
+        run: |
+          echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             docker ps
-            # docker pull ghcr.io/${{ github.repository }}:latest
-            # docker stop demo || true
-            # docker rm demo || true
-            # docker run -d --name ${{ vars.SERVICE_NAME }} -p 80:80 ghcr.io/${{ github.repository }}:latest
+          '  
+
+          # docker pull ghcr.io/${{ github.repository }}:latest
+          # docker stop demo || true
+          # docker rm demo || true
+          # docker run -d --name ${{ vars.SERVICE_NAME }} -p 80:80 ghcr.io/${{ github.repository }}:latest
