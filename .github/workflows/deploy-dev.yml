@@ -7,15 +7,14 @@ on:
       - main
 
 jobs:
+  build:
+    uses: ./.github/workflows/docker-image.yml
   deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Build and Push Docker Image
-        uses: ./.github/workflows/docker-image.yml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
