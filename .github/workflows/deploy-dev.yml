@@ -37,8 +37,8 @@ jobs:
           HOSTNAME: ${{ env.PUBLIC_IP}}
           USER_NAME: ec2-user
         run: |
-          echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key.pem
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
             docker ps
           '  
 
