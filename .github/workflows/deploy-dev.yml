@@ -22,27 +22,37 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Get EC2 Public IP
-        id: get_ec2_ip
         run: |
           EC2_DEV_TAG=${{ vars.SERVICE_NAME }}-dev-web
           PUBLIC_IP_DEV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_DEV_TAG}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           echo "PUBLIC_IP=$PUBLIC_IP_DEV" >> $GITHUB_ENV
-      - name: Print public IP
-        run: |
-          echo ${{ env.PUBLIC_IP }}
 
-      - name: Deploy to EC2
-        env:
-          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          HOSTNAME: ${{ env.PUBLIC_IP}}
-          USER_NAME: ec2-user
+      - name: Get database user name
+        id: db_username
         run: |
-          echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
-            docker ps
-          '  
+          DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db_username --query "Parameter.Value" --output text)
+          echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
-          # docker pull ghcr.io/${{ github.repository }}:latest
-          # docker stop demo || true
-          # docker rm demo || true
-          # docker run -d --name ${{ vars.SERVICE_NAME }} -p 80:80 ghcr.io/${{ github.repository }}:latest
+      - name: Print all env variables
+        run: |
+          echo "DB_USERNAME=${{ env.DB_USERNAME}}"
+
+      # - name: Deploy Docker to EC2
+      #   env:
+      #     PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+      #     HOSTNAME: ${{ env.PUBLIC_IP}}
+      #     USER_NAME: ec2-user
+      #   run: |
+      #     echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key.pem
+      #     ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+      #       docker ps
+      #       docker pull ghcr.io/${{ github.repository }}:latest
+      #       docker stop ${{ vars.SERVICE_NAME}} || true
+      #       docker rm ${{ vars.SERVICE_NAME}} || true
+      #       docker run -d --name ${{ vars.SERVICE_NAME}} -p 80:80 \
+      #         -e WORDPRESS_DB_HOST=${aws_ssm_parameter.db_host.value} \
+      #         -e WORDPRESS_DB_NAME=${{ vars.SERVICE_NAME}} \
+      #         -e WORDPRESS_DB_USER=${data.aws_ssm_parameter.db_username.value} \
+      #         -e WORDPRESS_DB_PASSWORD=${data.aws_ssm_parameter.db_password.value} \
+      #         ghcr.io/johannez-demo/wordpress:latest
+      #     '
