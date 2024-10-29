@@ -27,32 +27,42 @@ jobs:
           PUBLIC_IP_DEV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_DEV_TAG}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           echo "PUBLIC_IP=$PUBLIC_IP_DEV" >> $GITHUB_ENV
 
+      - name: Get database host
+        id: db_host
+        run: |
+          DB_HOST=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.host --query "Parameter.Value" --output text)
+          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
       - name: Get database user name
         id: db_username
         run: |
           DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.username --query "Parameter.Value" --output text)
           echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
+      - name: Get database password
+        id: db_password
+        run: |
+          DB_PASSWORD=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.password --query "Parameter.Value" --output text)
+          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
+
       - name: Print all env variables
         run: |
           echo "DB_USERNAME=${{ env.DB_USERNAME}}"
 
-      # - name: Deploy Docker to EC2
-      #   env:
-      #     PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-      #     HOSTNAME: ${{ env.PUBLIC_IP}}
-      #     USER_NAME: ec2-user
-      #   run: |
-      #     echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key.pem
-      #     ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
-      #       docker ps
-      #       docker pull ghcr.io/${{ github.repository }}:latest
-      #       docker stop ${{ vars.SERVICE_NAME}} || true
-      #       docker rm ${{ vars.SERVICE_NAME}} || true
-      #       docker run -d --name ${{ vars.SERVICE_NAME}} -p 80:80 \
-      #         -e WORDPRESS_DB_HOST=${aws_ssm_parameter.db_host.value} \
-      #         -e WORDPRESS_DB_NAME=${{ vars.SERVICE_NAME}} \
-      #         -e WORDPRESS_DB_USER=${data.aws_ssm_parameter.db_username.value} \
-      #         -e WORDPRESS_DB_PASSWORD=${data.aws_ssm_parameter.db_password.value} \
-      #         ghcr.io/johannez-demo/wordpress:latest
-      #     '
+      - name: Deploy Docker to EC2
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          HOSTNAME: ${{ env.PUBLIC_IP}}
+          USER_NAME: ec2-user
+        run: |
+          echo "${PRIVATE_KEY}" > private_key.pem && chmod 600 private_key.pem
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+            docker pull ghcr.io/${{ github.repository }}:latest
+            docker stop ${{ vars.SERVICE_NAME}} || true
+            docker rm ${{ vars.SERVICE_NAME}} || true
+            docker run -d --name ${{ vars.SERVICE_NAME}} -p 80:80 \
+              -e WORDPRESS_DB_HOST=${{ env.DB_HOST }} \
+              -e WORDPRESS_DB_NAME=${{ vars.SERVICE_NAME}} \
+              -e WORDPRESS_DB_USER=${{ env.DB_USERNAME }} \
+              -e WORDPRESS_DB_PASSWORD=${{ env.DB_PASSWORD }} \
+              ghcr.io/${{ github.repository }}:latest
+          '
