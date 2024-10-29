@@ -25,7 +25,7 @@ jobs:
         id: get_ec2_ip
         run: |
           EC2_DEV_TAG=${{ vars.SERVICE_NAME }}-dev-web
-          PUBLIC_IP_DEV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$(EC2_DEV_TAG)" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          PUBLIC_IP_DEV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${EC2_DEV_TAG}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           echo "PUBLIC_IP=$PUBLIC_IP_DEV" >> $GITHUB_ENV
       - name: Print public IP
         run: |
