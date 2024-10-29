@@ -36,14 +36,14 @@ jobs:
         id: db_username
         run: |
           DB_USERNAME=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.username --query "Parameter.Value" --output text)
-          echo "::add-mask::$DB_USERNAME"
-          echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV 2>/dev/null
+          echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
       - name: Get database password
         id: db_password
         run: |
           DB_PASSWORD=$(aws ssm get-parameter --name /${{ vars.SERVICE_NAME }}/dev/db.password --with-decryption --query "Parameter.Value" --output text)
-          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV 2>/dev/null
+          echo "::add-mask::$DB_PASSWORD"
+          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
 
       - name: Deploy Docker to EC2
         env:
