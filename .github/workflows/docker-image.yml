@@ -29,7 +29,7 @@ jobs:
         run: |
           git fetch --tags
           git tag
-          git describe --tags
+          git describe --tags --always
 
       # - name: Create version.json
       #   run: |
