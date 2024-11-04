@@ -28,8 +28,7 @@ jobs:
       - name: Print github object
         run: |
           git fetch --tags
-          git tag
-          git describe --tags --always
+          git tag | sort -V | tail -n 1
 
       # - name: Create version.json
       #   run: |
