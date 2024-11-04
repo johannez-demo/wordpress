@@ -25,16 +25,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print github object
+      - name: Create version.json
         run: |
-          git fetch --tags
-          git tag | sort -V | tail -n 1
-
-      # - name: Create version.json
-      #   run: |
-      #     LATEST_TAG=$(git describe --tags --abbrev=0)
-      #     VERSION=$(date +%Y.%m.%d).${{ github.run_number }}
-      #     echo '{ "version": "'${VERSION}'", "commit": "'${{ github.sha }}'", "tag": "'${LATEST_TAG}'" }' > version.json
+          LATEST_TAG=$(git tag | sort -V | tail -n 1)
+          VERSION=$(date +%Y.%m.%d).${{ github.run_number }}
+          echo '{ "version": "'${VERSION}'", "commit": "'${{ github.sha }}'", "tag": "'${LATEST_TAG}'" }' > version.json
 
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v6
