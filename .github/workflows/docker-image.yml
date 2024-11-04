@@ -25,11 +25,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print git tags
+      - name: Print github object
         run: |
-          git fetch --tags
-          git tag
-          git describe --tags --abbrev=0
+          echo "${{ toJSON(github) }}"
 
       # - name: Create version.json
       #   run: |
