@@ -27,7 +27,9 @@ jobs:
 
       - name: Print github object
         run: |
-          echo "${{ toJSON(github) }}"
+          git fetch --tags
+          git tag
+          git describe --tags
 
       # - name: Create version.json
       #   run: |
