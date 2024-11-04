@@ -31,11 +31,11 @@ jobs:
           VERSION=$(date +%Y.%m.%d).${{ github.run_number }}
           echo '{ "version": "'${VERSION}'", "commit": "'${{ github.sha }}'", "tag": "'${LATEST_TAG}'" }' > version.json
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     push: true
-      #     tags: |
-      #       ghcr.io/${{ github.repository }}:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
