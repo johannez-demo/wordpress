@@ -56,6 +56,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: aws-ssm-to-env
+        uses: eliasjcjunior/aws-ssm-parameters-action@main
+        with:
+          recursive: true
+          split-env: true
+          upper-case: true
+          paths: |
+            /${{ vars.SERVICE_NAME }}/dev
+
+      - name: print all env variables
+        run: |
+          env
+
       - name: Get EC2 Public IP
         run: |
           EC2_DEV_TAG=${{ vars.SERVICE_NAME }}-dev-web
